@@ -520,35 +520,35 @@ int
 main(int argc, char ** argv)
 {
 	int i=0;
-    int ret = rte_eal_init(argc, argv);
-   struct rte_pci_driver * drv = rte_pci_bus.driver_list.tqh_first; 
-   if (ret < 0)
+	int ret = rte_eal_init(argc, argv);
+	struct rte_pci_driver * drv = rte_pci_bus.driver_list.tqh_first; 
+	if (ret < 0)
 		rte_panic("Cannot init EAL\n");
 
-     printf("%s\n", drv->next.tqe_next->next.tqe_next->driver.name);
+     	printf("%s\n", drv->next.tqe_next->next.tqe_next->driver.name);
 	struct rte_pci_device * dev = rte_pci_bus.device_list.tqh_first->next.tqe_next;
  //   printf("%s\n", rte_pci_bus.device_list.tqh_first->next.tqe_next->device.name);
-    for(i = 0 ; strcmp(drv->driver.name, "rawdev_ioat") != 0;  i++)
-    {	drv = drv->next.tqe_next;
+    	for(i = 0 ; strcmp(drv->driver.name, "rawdev_ioat") != 0;  i++)
+    	{	drv = drv->next.tqe_next;
 	}
 //	drv->dma_map(dev, &dev->mem_resource[0].addr, NULL, dev->mem_resource[0].len);
-//	drv->probe(drv, rte_pci_bus.device_list.tqh_first->next.tqe_next);
-//   ioat_rawdev_probe(drv, rte_pci_bus.device_list.tqh_first->next.tqe_next); 
-//   rte_pci_bus.device_list.tqh_first->next.tqe_next->device.driver = &drv->driver;
-//  rte_rawdev_pmd_allocate("0000:00:04.0", sizeof(struct rte_ioat_rawdev), 0);    
-struct rte_rawdev_info rdev_info = { 0 };
-    printf("%d\n", rte_rawdev_count());
-printf("%d\n", i);
-int j = 0;    
-int rdev_id = 0;
-   //     do {
+	drv->probe(drv, rte_pci_bus.device_list.tqh_first->next.tqe_next);
+  	ioat_rawdev_probe(drv, rte_pci_bus.device_list.tqh_first->next.tqe_next); 
+//   	rte_pci_bus.device_list.tqh_first->next.tqe_next->device.driver = &drv->driver;
+//  	rte_rawdev_pmd_allocate("0000:00:04.0", sizeof(struct rte_ioat_rawdev), 0);    
+	struct rte_rawdev_info rdev_info = { 0 };
+    	printf("%d\n", rte_rawdev_count());
+	printf("%d\n", i);
+	int j = 0;    
+	int rdev_id = 0;
+//      do {
 	 printf("%d\n", i);	
             rte_rawdev_info_get(rdev_id, &rdev_info);
-	printf("%s\n", rdev_info.driver_name);
+	 printf("%s\n", rdev_info.driver_name);
 //	 } while (strcmp(rdev_info.driver_name,
-  //          IOAT_PMD_RAWDEV_NAME_STR) != 0);
+//          IOAT_PMD_RAWDEV_NAME_STR) != 0);
     
-//    if(rdev_id == rte_rawdev_count())	return -1;
-    ioat_test(rdev_id);
-    return 0;
+//      if(rdev_id == rte_rawdev_count())	return -1;
+    	ioat_test(rdev_id);
+    	return 0;
 }
